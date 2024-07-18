@@ -58,9 +58,9 @@ class App extends React.Component<Record<string, never>, AppState> {
         return (
             <div className="bg-image relative">
                 <div className="container mx-auto font-poppins grid place-content-center min-h-svh p-5 pb-0">
-                    <div className="max-w-[800px] lg:w-[800px] rounded-xl p-5 flex flex-col items-center bg-white/50 border-[3px] border-white backdrop-blur-[1px]">
+                    <div className="max-w-[600px] lg:w-[800px] rounded-xl p-5 flex flex-col items-center bg-white/50 border-[3px] border-white backdrop-blur-[1px]">
                         <h1 className="text-center text-6xl pb-5 border-b-2 border-slate-700 w-full font-bold bg-clip-text text-transparent bg-gradient-to-tr to-[#3C3DBF] from-[#2998FF]">FEEDUITEN APPS</h1>
-                        <div className="w-full max-h-[600px] overflow-y-auto scroll-custom">
+                        <div className="w-full max-h-[400px] overflow-y-auto scroll-custom">
                             <p className="mt-5 text-4xl font-semibold text-primary text-center">{formatCurrency(this.state.balance)}</p>
                             <p className=" text-center">Uang kamu tersisa {this.state.percentage}% lagi</p>
 
