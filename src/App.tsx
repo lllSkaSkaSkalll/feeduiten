@@ -64,13 +64,13 @@ class App extends React.Component<Record<string, never>, AppState> {
                             <p className="mt-5 text-4xl font-semibold text-primary text-center">{formatCurrency(this.state.balance)}</p>
                             <p className=" text-center">Uang kamu tersisa {this.state.percentage}% lagi</p>
 
-                            <div className="grid grid-cols-1 min-[615px]:grid-cols-2 w-full gap-5 mt-10">
+                            <div className="grid grid-cols-1 min-[615px]:grid-cols-2 w-full gap-5 mt-5">
                                 <div className="rounded-lg p-3 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] bg-white/50">
                                     <div className="w-7 h-7 flex items-center justify-center bg-blue-400 border border-black rounded-md">
                                         <img src={wallet} alt="" />
                                     </div>
-                                    <p className="font-medium text-slate-700 mt-1">Pemasukan</p>
-                                    <p className="text-xl font-medium  mt-4 text-primary">{formatCurrency(this.state.income)}</p>
+                                    <p className="font-medium text-slate-700 mt-[2px]">Pemasukan</p>
+                                    <p className="text-xl font-medium  mt-2 text-primary">{formatCurrency(this.state.income)}</p>
                                     <p className="font-medium text-slate-700 mt-1">
                                         <span className="text-primary font-bold">{this.state.transactionIn}</span> Transaksi
                                     </p>
@@ -79,15 +79,15 @@ class App extends React.Component<Record<string, never>, AppState> {
                                     <div className="w-7 h-7 flex items-center justify-center bg-secondary border border-black rounded-md">
                                         <img src={expense} alt="" />
                                     </div>
-                                    <p className="font-medium text-slate-500 mt-1">Pengeluaran</p>
-                                    <p className="text-xl font-medium mt-4 text-secondary">{formatCurrency(this.state.expense)}</p>
+                                    <p className="font-medium text-slate-500 mt-[2px]">Pengeluaran</p>
+                                    <p className="text-xl font-medium mt-2 text-secondary">{formatCurrency(this.state.expense)}</p>
                                     <p className="font-medium text-slate-500 mt-1">
                                         <span className="text-secondary font-bold">{this.state.transactionOut}</span> Transaksi
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap gap-5 items-center justify-between w-full mt-10 border-b-2 border-white/90 pb-2">
+                            <div className="flex flex-wrap gap-3 items-center justify-between w-full mt-10 border-b-2 border-white/90 pb-2">
                                 <p className="text-xl font-medium text-primary">Ringkasan Transaksi</p>
                                 <div className="flex items-center gap-1">
                                     <ModalOpen
