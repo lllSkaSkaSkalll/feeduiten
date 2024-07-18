@@ -109,8 +109,8 @@ class App extends React.Component<Record<string, never>, AppState> {
                             </div>
                             <div className="flex flex-col gap-3 mt-4 w-full">
                                 {this.state.summary.map((summary, i) => (
-                                    <div key={i} className="w-full p-2 bg-white/20 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] rounded-lg flex items-center justify-between gap-5">
-                                        <div className="flex flex-wrap items-center gap-[3px]">
+                                    <div key={i} className="w-full p-2 bg-white/20 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] rounded-lg flex items-center flex-wrap justify-between gap-5">
+                                        <div className="flex items-center gap-[3px]">
                                             <div className={`w-12 h-12 rounded-lg flex items-center justify-center border border-black ${summary.type === "IN" ? "bg-primary/80" : "bg-red-400"}`}>
                                                 <img src={summary.type === "IN" ? wallet : bag} alt="" className="w-6 h-6 object-cover" />
                                             </div>
