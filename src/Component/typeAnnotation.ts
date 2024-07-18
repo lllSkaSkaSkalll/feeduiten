@@ -35,6 +35,7 @@ export interface AppState {
     transactionIn: number;
     transactionOut: number;
     summary: {
+        id: number;
         name: string;
         date: string;
         amount: number;

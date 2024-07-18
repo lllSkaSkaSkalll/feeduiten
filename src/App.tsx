@@ -2,7 +2,7 @@ import React from "react";
 import wallet from "./assets/wallet.png";
 import expense from "./assets/expense.png";
 import bag from "./assets/bag.png";
-import { MinusCircle, PlusCircle } from "@phosphor-icons/react";
+import { MinusCircle, PlusCircle, Trash } from "@phosphor-icons/react";
 import { AppState, TransactionFormData } from "./Component/typeAnnotation";
 import { calculatePercentage, formatCurrency } from "./Component/utils";
 import ModalOpen from "./Component/Modal";
@@ -36,6 +36,9 @@ class App extends React.Component<Record<string, never>, AppState> {
     };
 
     handleFormData = (data: TransactionFormData) => {
+        const id = new Date().getTime();
+        const newData = { ...data, id };
+
         this.setState((prevState) => {
             const newBalance = data.type === "IN" ? prevState.balance + data.amount : prevState.balance - data.amount;
             const newIncome = data.type === "IN" ? prevState.income + data.amount : prevState.income;
@@ -49,7 +52,30 @@ class App extends React.Component<Record<string, never>, AppState> {
                 expense: newExpense,
                 transactionIn: data.type === "IN" ? prevState.transactionIn + 1 : prevState.transactionIn,
                 transactionOut: data.type === "OUT" ? prevState.transactionOut + 1 : prevState.transactionOut,
-                summary: [...prevState.summary, data],
+                summary: [...prevState.summary, newData],
+            };
+        });
+    };
+
+    handleDelete = (id: number) => {
+        this.setState((prevState) => {
+            const summaryToDelete = prevState.summary.find((summary) => summary.id === id);
+            if (!summaryToDelete) return null;
+
+            const newBalance = summaryToDelete.type === "IN" ? prevState.balance - summaryToDelete.amount : prevState.balance + summaryToDelete.amount;
+            const newIncome = summaryToDelete.type === "IN" ? prevState.income - summaryToDelete.amount : prevState.income;
+            const newExpense = summaryToDelete.type === "OUT" ? prevState.expense - summaryToDelete.amount : prevState.expense;
+            const newPercentage = calculatePercentage(newIncome, newBalance);
+            const newSummary = prevState.summary.filter((summary) => summary.id !== id);
+
+            return {
+                balance: newBalance,
+                percentage: newPercentage,
+                income: newIncome,
+                expense: newExpense,
+                transactionIn: summaryToDelete.type === "IN" ? prevState.transactionIn - 1 : prevState.transactionIn,
+                transactionOut: summaryToDelete.type === "OUT" ? prevState.transactionOut - 1 : prevState.transactionOut,
+                summary: newSummary,
             };
         });
     };
@@ -62,7 +88,7 @@ class App extends React.Component<Record<string, never>, AppState> {
                         <h1 className="text-center text-xl sm:text-4xl pb-5 border-b-2 border-slate-700 w-full font-bold bg-clip-text text-transparent bg-gradient-to-tr to-[#3C3DBF] from-[#2998FF]">FEEDUITEN APPS</h1>
                         <div className="w-full max-h-[450px] overflow-y-auto scroll-custom">
                             <p className="mt-5 text-xl sm:text-4xl font-semibold text-primary text-center">{formatCurrency(this.state.balance)}</p>
-                            <p className=" text-center">Uang kamu tersisa {this.state.percentage}% lagi</p>
+                            <p className=" text-center">Uang kamu tersisa {this.state.percentage === null ? 0 : this.state.percentage}% lagi</p>
 
                             <div className="grid grid-cols-1 min-[615px]:grid-cols-2 w-full gap-5 mt-5">
                                 <div className="rounded-lg p-3 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] bg-white/50">
@@ -91,17 +117,17 @@ class App extends React.Component<Record<string, never>, AppState> {
                                 <p className="text-xl font-medium text-primary">Ringkasan Transaksi</p>
                                 <div className="flex items-center gap-1">
                                     <ModalOpen
-                                        className="flex items-center gap-[2px] bg-primary cursor-pointer py-2 px-4 rounded-xl text-white group hover:scale-105 duration-300"
+                                        className="flex items-center gap-[2px] bg-primary cursor-pointer py-2 px-4 rounded-xl text-white group duration-300 hover:bg-opacity-70 hover:text-black"
                                         text="Pemasukan"
-                                        icon={<PlusCircle size={26} className="text-white group-hover:rotate-180 duration-300" />}
+                                        icon={<PlusCircle size={26} className="text-white group-hover:rotate-180 duration-300 group-hover:text-black" />}
                                         type="IN"
                                         formSubmit={this.handleFormData}
                                     />
 
                                     <ModalOpen
-                                        className="flex items-center gap-[2px] bg-secondary cursor-pointer py-2 px-4 rounded-xl text-white group hover:scale-105 duration-300"
+                                        className="flex items-center gap-[2px] bg-secondary cursor-pointer py-2 px-4 rounded-xl text-white group duration-300 hover:bg-opacity-70 hover:text-black"
                                         text="Pengeluaran"
-                                        icon={<MinusCircle size={26} className="text-white group-hover:rotate-180 duration-300" />}
+                                        icon={<MinusCircle size={26} className="text-white group-hover:rotate-180 duration-300 group-hover:text-black" />}
                                         type="OUT"
                                         formSubmit={this.handleFormData}
                                     />
@@ -109,17 +135,20 @@ class App extends React.Component<Record<string, never>, AppState> {
                             </div>
                             <div className="flex flex-col gap-3 mt-4 w-full">
                                 {this.state.summary.map((summary, i) => (
-                                    <div key={i} className="w-full p-2 bg-white/20 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] rounded-lg flex items-center flex-wrap justify-between gap-5">
-                                        <div className="flex items-center gap-[3px]">
+                                    <div key={i} className="w-full p-2 bg-white/20 shadow-[2px_2px_15px_0_rgba(0,0,0,0.30)] rounded-lg flex items-center flex-wrap justify-between gap-5 relative">
+                                        <div className="flex items-center gap-5">
                                             <div className={`w-12 h-12 rounded-lg flex items-center justify-center border border-black ${summary.type === "IN" ? "bg-primary/80" : "bg-red-400"}`}>
                                                 <img src={summary.type === "IN" ? wallet : bag} alt="" className="w-6 h-6 object-cover" />
                                             </div>
-                                            <div className="flex flex-col justify-between h-14 py-[2px]">
+                                            <div className="flex flex-col justify-between h-14 py-[2px] relative">
                                                 <p className="text-base sm:text-lg font-medium line-clamp-1">{summary.name}</p>
                                                 <p className="leading-3 text-sm line-clamp-1">{summary.date}</p>
                                             </div>
                                         </div>
                                         <p className={`sm:text-xl text-base font-medium text-nowrap line-clamp-1 ${summary.type === "IN" ? "text-primary" : "text-secondary"}`}>{formatCurrency(summary.amount)}</p>
+                                        <button className="absolute right-2 top-1" onClick={() => this.handleDelete(summary.id)}>
+                                            <Trash size={20} className="hover:text-red-500" />
+                                        </button>
                                     </div>
                                 ))}
                             </div>
