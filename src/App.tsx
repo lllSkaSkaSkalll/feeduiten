@@ -59,9 +59,9 @@ class App extends React.Component<Record<string, never>, AppState> {
             <div className="bg-image relative">
                 <div className="container mx-auto font-poppins grid place-content-center min-h-svh p-5 pb-0">
                     <div className="max-w-[700px] lg:w-[700px] rounded-xl p-5 flex flex-col items-center bg-white/50 border-[3px] border-white backdrop-blur-[1px]">
-                        <h1 className="text-center text-4xl pb-5 border-b-2 border-slate-700 w-full font-bold bg-clip-text text-transparent bg-gradient-to-tr to-[#3C3DBF] from-[#2998FF]">FEEDUITEN APPS</h1>
+                        <h1 className="text-center text-xl sm:text-4xl pb-5 border-b-2 border-slate-700 w-full font-bold bg-clip-text text-transparent bg-gradient-to-tr to-[#3C3DBF] from-[#2998FF]">FEEDUITEN APPS</h1>
                         <div className="w-full max-h-[450px] overflow-y-auto scroll-custom">
-                            <p className="mt-5 text-4xl font-semibold text-primary text-center">{formatCurrency(this.state.balance)}</p>
+                            <p className="mt-5 text-xl sm:text-4xl font-semibold text-primary text-center">{formatCurrency(this.state.balance)}</p>
                             <p className=" text-center">Uang kamu tersisa {this.state.percentage}% lagi</p>
 
                             <div className="grid grid-cols-1 min-[615px]:grid-cols-2 w-full gap-5 mt-5">
@@ -115,11 +115,11 @@ class App extends React.Component<Record<string, never>, AppState> {
                                                 <img src={summary.type === "IN" ? wallet : bag} alt="" className="w-6 h-6 object-cover" />
                                             </div>
                                             <div className="flex flex-col justify-between h-14 py-[2px]">
-                                                <p className="text-lg font-medium line-clamp-1">{summary.name}</p>
-                                                <p className="leading-3 text-sm">{summary.date}</p>
+                                                <p className="text-base sm:text-lg font-medium line-clamp-1">{summary.name}</p>
+                                                <p className="leading-3 text-sm line-clamp-1">{summary.date}</p>
                                             </div>
                                         </div>
-                                        <p className={`text-xl font-medium text-nowrap ${summary.type === "IN" ? "text-primary" : "text-secondary"}`}>{formatCurrency(summary.amount)}</p>
+                                        <p className={`sm:text-xl text-base font-medium text-nowrap line-clamp-1 ${summary.type === "IN" ? "text-primary" : "text-secondary"}`}>{formatCurrency(summary.amount)}</p>
                                     </div>
                                 ))}
                             </div>
