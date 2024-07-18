@@ -87,7 +87,7 @@ class App extends React.Component<Record<string, never>, AppState> {
                                 </div>
                             </div>
 
-                            <div className="flex flex-wrap gap-3 items-center justify-between w-full mt-10 border-b-2 border-white/90 pb-2">
+                            <div className="flex flex-wrap gap-3 items-center justify-between w-full mt-5 border-b-2 border-white/90 pb-2">
                                 <p className="text-xl font-medium text-primary">Ringkasan Transaksi</p>
                                 <div className="flex items-center gap-1">
                                     <ModalOpen
